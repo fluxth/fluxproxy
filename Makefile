@@ -8,5 +8,7 @@ run: config.json
 	@uwsgi --http 0.0.0.0:7979 --module fluxproxy:app
 
 env:
-	virtualenv env
+	@virtualenv env
 	$(info virtualenv created)
+	@./env/bin/pip3 install -r requirements.txt
+	$(info installed dependencies)
