@@ -5,7 +5,7 @@ config.json: env
 	$(info config.json generated)
 
 run: config.json
-	@uwsgi --http 0.0.0.0:7979 --module fluxproxy:app
+	@uwsgi --http [::]:7979 --module fluxproxy:app
 
 env:
 	@virtualenv env
