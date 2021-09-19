@@ -37,8 +37,9 @@ def proxy():
     req = msgpack.unpackb(serialized_req)
 
     url = req["url"]
+    headers = req.get("headers", {})
 
-    resp = requests.get(url)
+    resp = requests.get(url, headers=headers)
     encrypted_resp = fernet.encrypt(resp.content)
 
     http_resp = Response(base64.urlsafe_b64decode(encrypted_resp))

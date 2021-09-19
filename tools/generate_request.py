@@ -26,7 +26,10 @@ def main():
         key = parts[0]
         value = "=".join(parts[1:])
 
-        payload[key] = value
+        if key in ("headers"):
+            payload[key] = json.loads(value)
+        else:
+            payload[key] = value
 
     serialized_payload = msgpack.packb(payload)
     print(fernet.encrypt(serialized_payload).decode("utf-8"))
