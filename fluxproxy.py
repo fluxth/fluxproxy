@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, request, abort, Response
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 import json
 import msgpack
 import base64
@@ -29,7 +29,11 @@ def proxy():
     if len(encrypted_req) == 0:
         abort(400)
 
-    serialized_req = fernet.decrypt(encrypted_req.encode("ascii"))
+    try:
+        serialized_req = fernet.decrypt(encrypted_req.encode("ascii"))
+    except InvalidToken:
+        abort(401)
+
     req = msgpack.unpackb(serialized_req)
 
     url = req["url"]
