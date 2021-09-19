@@ -16,7 +16,7 @@ def main():
     payload = sys.stdin.buffer.read()
     b64_payload = base64.urlsafe_b64encode(payload)
 
-    print(fernet.decrypt(b64_payload))
+    print(fernet.decrypt(b64_payload).decode("utf-8"))
 
 
 if __name__ == "__main__":
